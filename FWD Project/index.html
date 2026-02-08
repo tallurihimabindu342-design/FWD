@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Behavior Analysis Security System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rule-based login behavior analysis security dashboard">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top-bar">
+    <h1>Login Behavior Analysis</h1>
+    <span class="subtitle">Security Monitoring Dashboard</span>
+</header>
+
+<main class="dashboard">
+
+    <section class="login-panel">
+        <h2>Secure Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Authenticate</button>
+        </form>
+        <div id="status"></div>
+    </section>
+
+    <section class="analysis-panel">
+        <h2>Behavior Analysis</h2>
+
+        <div class="metric">
+            <span>Risk Level</span>
+            <strong id="riskLevel" class="low">LOW</strong>
+        </div>
+
+        <div class="metric">
+            <span>Total Attempts</span>
+            <strong id="attemptCount">0</strong>
+        </div>
+
+        <div class="metric">
+            <span>Last Attempt</span>
+            <strong id="lastAttempt">—</strong>
+        </div>
+
+        <h3>Risk Meter</h3>
+        <div class="risk-meter">
+            <div id="riskFill"></div>
+        </div>
+
+        <h3>Triggered Rules</h3>
+        <ul id="rulesTriggered"></ul>
+
+        <h3>Security Timeline</h3>
+        <ul id="timeline" class="timeline"></ul>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Security Systems Lab</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
