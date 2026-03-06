@@ -4,13 +4,19 @@ let lastAttemptTime = null;
 
 const riskFill = document.getElementById("riskFill");
 const timeline = document.getElementById("timeline");
+const emailAlert = document.getElementById("emailAlert");
 
 document.getElementById("loginForm").addEventListener("submit", function (e) {
     e.preventDefault();
     analyzeLogin();
 });
 
+function sendEmailAlert(reason) {
+    emailAlert.innerText = "⚠ Email alert sent to administrator: " + reason;
+}
+
 function analyzeLogin() {
+
     const user = document.getElementById("username").value;
     const pass = document.getElementById("password").value;
 
@@ -42,6 +48,7 @@ function analyzeLogin() {
 
     if (lastAttemptTime !== null) {
         const diff = (now - lastAttemptTime) / 1000;
+
         if (diff < 30) {
             risk += 2;
             triggered.push("Rapid login attempts within short time");
@@ -50,6 +57,7 @@ function analyzeLogin() {
 
     if (user !== validUser || pass !== validPass) {
         failedAttempts++;
+
         if (failedAttempts >= 2) {
             risk += 3;
             triggered.push("Repeated failed login attempts");
@@ -57,6 +65,7 @@ function analyzeLogin() {
     }
 
     const hour = now.getHours();
+
     if (hour >= 0 && hour <= 5) {
         risk += 1;
         triggered.push("Login during unusual hours");
@@ -66,7 +75,9 @@ function analyzeLogin() {
         status.style.color = "#9cffc7";
         status.innerText = "Authentication successful. System secure.";
         failedAttempts = 0;
-    } else {
+        emailAlert.innerText = "";
+    } 
+    else {
         status.style.color = "#ff9e9e";
         status.innerText = "Suspicious activity detected.";
     }
@@ -74,12 +85,16 @@ function analyzeLogin() {
     if (risk <= 1) {
         riskLevel.innerText = "LOW";
         riskLevel.className = "low";
-    } else if (risk <= 3) {
+    } 
+    else if (risk <= 3) {
         riskLevel.innerText = "MEDIUM";
         riskLevel.className = "medium";
-    } else {
+    } 
+    else {
         riskLevel.innerText = "HIGH";
         riskLevel.className = "high";
+
+        sendEmailAlert("High risk login behavior detected");
     }
 
     let riskPercent = Math.min((risk / 6) * 100, 100);
